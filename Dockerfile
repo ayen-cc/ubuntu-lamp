@@ -80,7 +80,7 @@ RUN sed -i 's/;date.timezone =/date.timezone = PRC/' /etc/php.ini
 RUN echo 'AddType application/x-httpd-php .php' >> /etc/httpd/httpd.conf
 RUN echo 'PhpIniDir /etc' >> /etc/httpd/httpd.conf
 RUN sed -i 's/index.html/index.html index.php/' /etc/httpd/httpd.conf
-copy files/info.php /usr/local/apache/htdocs/info.php
+copy files/info.php /data/www/apache/default/info.php
 RUN echo 'export PATH=$PATH:/usr/local/php/bin' >> ~/.bashrc
 RUN echo 'source ~/.bashrc'
 #MYSQL
@@ -103,6 +103,8 @@ RUN ln -sv /usr/local/mysql/bin/mysqladmin  /usr/sbin/mysqladmin
 RUN ln -sv /usr/local/mysql/bin/mysqldump  /usr/sbin/mysqldump
 COPY files/my.cnf /etc/my.cnf
 RUN /usr/local/mysql/scripts/mysql_install_db  --user=mysql  --basedir=/usr/local/mysql  --datadir=/data/mysql
+#PROTS
+EXPOSE 22 80 3306
 #CLEAN
 RUN apt-get clean \
     && apt-get autoclean \
